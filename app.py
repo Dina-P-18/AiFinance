@@ -14,10 +14,13 @@ import numpy as np
 pytesseract.pytesseract.tesseract_cmd = r"D:\Pro Files\tesseract.exe"
 
 # ---------------- Firebase ----------------
-if not firebase_admin._apps:
-    cred = credentials.Certificate("serviceAccountKey.json")
-    firebase_admin.initialize_app(cred)
+import os
+import json
 
+if not firebase_admin._apps:
+    firebase_key = json.loads(os.environ["FIREBASE_KEY"])
+    cred = credentials.Certificate(firebase_key)
+    firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 # ---------------- Flask ----------------
